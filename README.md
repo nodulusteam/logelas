@@ -12,4 +12,18 @@
 * we forget | too lazy | it's to complicated | logging is for the weak | etc...
 * we still need logs!
 
- 
+ ```
+import { Logger, Log, LogClass } from '../'
+
+const log = new Logger('test.log', 'test');
+
+@LogClass(log)
+export class Controller {
+
+    @Log(log)
+    public action1() {
+
+    }
+}
+
+ ```
