@@ -11,10 +11,13 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.20",
+    "@types/node": "^7.0.31",
     "alsatian": "^2.0.0",
+    "typescript": "^2.4.1"
+  },
+  "dependencies": {
     "debug": "^3.0.0",
     "log": "^1.4.0",
     "logrotator": "^1.1.0",
