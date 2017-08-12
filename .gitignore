@@ -1,0 +1,7 @@
+node_modules/
+*.js
+*.map
+*.d.ts
+!@types/*.d.ts
+examples/data/
+logs/
