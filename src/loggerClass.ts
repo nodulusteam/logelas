@@ -1,13 +1,19 @@
 
 const Log = require('log');
+const logSymbols = require('log-symbols');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
-
-export class Logger {
+export interface ILogger {
+    log(...args)
+    info(...args)
+    debug(...args)
+    error(...args)
+}
+export class Logger implements ILogger {
     private debuglog: any;
     private logWriter: any;
     constructor(fileName, debugName, debugLevel: string = 'debug') {
-        this.debug = require('debug')(debugName);
+        this.debuglog = require('debug')(debugName);
 
         var log;
         var log_dir_file = '';
@@ -44,22 +50,22 @@ export class Logger {
     public log(...args) {
         this.debuglog(...args);
         let logargs = args.map(item => arg(item));
-        this.logWriter.info(...logargs);
+        this.logWriter.info(logSymbols.info, ...logargs);
     }
     public info(...args) {
         let logargs = args.map(item => arg(item));
         this.debuglog(...args);
-        this.logWriter.info(...logargs);
+        this.logWriter.info(logSymbols.success,...logargs);
     }
     public debug(...args) {
         let logargs = args.map(item => arg(item));
         this.debuglog(...args);
-        this.logWriter.debug(...logargs);
+        this.logWriter.debug(logSymbols.info,...logargs);
     }
     public error(...args) {
         let logargs = args.map(item => arg(item));
         this.debuglog(...args);
-        this.logWriter.error(...logargs);
+        this.logWriter.error(logSymbols.error,...logargs);
     }
 
 }

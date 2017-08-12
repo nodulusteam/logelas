@@ -1,8 +1,8 @@
-import { Logger } from './loggerClass'
+import { ILogger, Logger } from './loggerClass'
 
 
 let methodIdentifier: number = 100000;
-export function Log(logger?: Logger) {
+export function Log(logger?: ILogger) {
     return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 
         if (!logger && target.logelas)
@@ -49,7 +49,7 @@ export function LogParam(name?: string) {
 }
 
 
-export function LogClass(logger: Logger) {
+export function LogClass(logger: ILogger) {
     return (target: any) => {
         target.logelas = logger;
         // save a reference to the original constructor
