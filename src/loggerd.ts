@@ -26,10 +26,13 @@ export function Log(logger?: ILogger) {
                         name = 'no name';
                     }
 
-                    (logger as any).__methodname = `${_methodIdentifier} :: ${name}.${propertyKey}`;
 
-                    if (logger)
+
+                    if (logger) {
+                        (logger as any).__methodname = `${_methodIdentifier} :: ${name}.${propertyKey}`;
                         logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} => `, args);
+                    }
+
 
                     try {
 
