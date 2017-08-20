@@ -1,12 +1,17 @@
 import { Logger, Log, LogClass } from '../'
+import { logger } from './test-logger'
 
-const log = new Logger('test.log', 'test');
 
-@LogClass(log)
+@LogClass(logger)
 export class Controller {
+    @Log()
+    public action1(min, max) {
+        return min * max;
+    }
 
-    @Log(log)
-    public action1() {
-
+    @Log()
+    public action2(min, max) {
+        logger.log(this, 'a message from inside the method');
+        return this.action1(min, max);
     }
 }

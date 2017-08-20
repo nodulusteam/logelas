@@ -5,8 +5,7 @@ let methodIdentifier: number = 100000;
 export function Log(logger?: ILogger) {
     return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
 
-        if (!logger && target.logelas)
-            logger = target.logelas;
+
 
         // save a reference to the original method
         let originalMethod = descriptor.value;
@@ -15,19 +14,36 @@ export function Log(logger?: ILogger) {
         descriptor.value =
             function (_methodIdentifier) {
                 return function (...args: any[]) {
+                    if (!logger && target.logelas)
+                        logger = target.logelas;
                     let name = target.name;
-                    if (!name && target.constructor)
+                    if (!name && target.constructor) {
                         name = target.constructor.name;
+                        if (!logger && target.constructor.logelas)
+                            logger = target.constructor.logelas;
+                    }
                     else {
                         name = 'no name';
                     }
+
+                    (logger as any).__methodname = `${_methodIdentifier} :: ${name}.${propertyKey}`;
+
                     if (logger)
                         logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} => `, args);
-                    let result = originalMethod.call(this, ...args);
-                    if (result)
+
+                    try {
+
+                        let result = originalMethod.call(target, ...args);
+                        if (result)
+                            if (logger)
+                                logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} <= `, result);
+                        return result;
+                    } catch (error) {
                         if (logger)
-                            logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} <= `, result);
-                    return result;
+                            logger.error(`${_methodIdentifier} :: ${name}.${propertyKey} ## `, error.message, error.stack);
+                        return error;
+                    }
+
                 };
             }(methodIdentifier)
 
