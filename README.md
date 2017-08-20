@@ -14,15 +14,14 @@
 
  ```
 import { Logger, Log, LogClass } from '../'
-
 const log = new Logger('test.log', 'test');
 
 @LogClass(log)
 export class Controller {
 
-    @Log(log)
+    @Log()
     public action1() {
-
+        log.error('there is the rror log');
     }
 }
 
