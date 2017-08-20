@@ -130,7 +130,7 @@ function arg(item: any) {
             try {
                 if (typeof singleArg === 'function')
                     return `func ${singleArg.name}`;
-                let a = JSON.stringify(singleArg);
+                let a = typeof singleArg === 'string' ? singleArg : JSON.stringify(singleArg);
                 if (a)
                     return a.replace(/\r\n/g, '');
 
