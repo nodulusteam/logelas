@@ -33,7 +33,7 @@ export function Log(logger?: ILogger) {
 
                     try {
 
-                        let result = originalMethod.call(target, ...args);
+                        let result = originalMethod.call(this, ...args);
                         if (result)
                             if (logger)
                                 logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} <= `, result);
