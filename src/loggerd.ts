@@ -22,9 +22,9 @@ export function Log(logger?: ILogger) {
                         if (!logger && target.constructor.logelas)
                             logger = target.constructor.logelas;
                     }
-                    else {
-                        name = 'no name';
-                    }
+                    // else {
+                    //     name = 'no name';
+                    // }
 
 
 
@@ -37,10 +37,27 @@ export function Log(logger?: ILogger) {
                     try {
 
                         let result = originalMethod.call(this, ...args);
-                        if (result)
+
+                        if (result && result.toString && result.toString() === '[object Promise]') {
+                            result.then((data) => {
+                                if (logger)
+                                    logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} <= `, data);
+
+                                return data;
+                            })
+                        } else {
                             if (logger)
                                 logger.log(`${_methodIdentifier} :: ${name}.${propertyKey} <= `, result);
+                        }
+
                         return result;
+
+
+
+
+
+
+
                     } catch (error) {
                         if (logger)
                             logger.error(`${_methodIdentifier} :: ${name}.${propertyKey} ## `, error.message, error.stack);

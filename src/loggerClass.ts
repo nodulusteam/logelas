@@ -101,7 +101,7 @@ export class Logger implements ILogger {
         if (level >= debugLevel.debug) {
             let logargs = args.map(item => arg(item));
             this.debuglog(...args);
-            this.logWriter.debug(logSymbols.debug, ...logargs);
+            this.logWriter.debug(logSymbols.info, ...logargs);
         }
     }
 
