@@ -70,3 +70,17 @@ logelas will create a log entry for every call to the method and for every value
 [2017-08-25T20:52:02.508Z] INFO   √ 100002 :: Controller.action2 <=  16
 [2017-08-25T20:52:02.508Z] INFO   √ 100001 :: Controller.action1 <=  32
 ```
+
+
+### Manual logging
+some times we need to log something within the method logic. using the same logger as the @LogClass decorator we can easily emit log messages that will automatically log the class and method names and id.
+
+```javascript
+
+logger.log(this, 'my custom log entry');
+logger.debug(this, 'debug this please');
+logger.info(this, 'just an info lo entry');
+logger.error(this, 'huston we have a problem');
+logger.warn(this, 'this is the last warning');
+
+```
