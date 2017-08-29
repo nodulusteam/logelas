@@ -5,3 +5,4 @@ node_modules/
 !@types/*.d.ts
 examples/data/
 logs/
+!npm/log.js
