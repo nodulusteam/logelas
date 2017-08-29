@@ -4,6 +4,12 @@ import { logger } from './test-logger'
 
 @LogClass(logger)
 export class Controller {
+
+    constructor()
+    {
+       
+    }
+
     @Log()
     public action1(min, max) {
         return min * max;

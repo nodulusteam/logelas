@@ -1,4 +1,4 @@
 //export * from './src/logger'
-export { ILogger, Logger } from './src/loggerClass'
+export { Logger } from './src/loggerClass'
 export { Log, LogClass, LogParam } from './src/loggerd'
-
+export { ILogger } from './src/ILogger'

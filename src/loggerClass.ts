@@ -3,6 +3,9 @@ const Log = require('../npm/log');
 const logSymbols = require('log-symbols');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
+import { ILogger } from './ilogger';
+import { MethodName } from './MethodName';
+
 
 
 export enum debugLevel {
@@ -11,16 +14,11 @@ export enum debugLevel {
     warn = 3,
     error = 4
 }
-export interface ILogger {
-    log(...args)
-    info(...args)
-    debug(...args)
-    warn(...args)
-    error(...args)
-}
+
 export class Logger implements ILogger {
     private debuglog: any;
     private logWriter: any;
+    private _fileName: string;
     constructor(fileName, debugName, debugLevel?: debugLevel) {
         this.debuglog = require('debug')(debugName);
 
@@ -40,10 +38,12 @@ export class Logger implements ILogger {
                 }
             });
         }
-        this.logWriter = new Log(debugLevel, fs.createWriteStream(path.join(log_dir_file, fileName), { flags: 'a' }));
+
+        this._fileName = path.join(log_dir_file, fileName);
+        this.logWriter = new Log(debugLevel, fs.createWriteStream(this._fileName, { flags: 'a' }));
         // check file rotation every 5 minutes, and rotate the file if its size exceeds 10 mb. 
         // keep only 3 rotated files and compress (gzip) them. 
-        rotator.register(path.join(log_dir_file, fileName), { schedule: '5m', size: '1m', compress: true, count: 3 });
+        rotator.register(this._fileName, { schedule: '5m', size: '1m', compress: true, count: 3 });
 
         rotator.on('error', function (err) {
             console.log('oops, an error occured!');
@@ -115,6 +115,11 @@ export class Logger implements ILogger {
         }
     }
 
+
+    public truncate() {
+        fs.truncateSync(this._fileName, 0);
+        return this;
+    }
 }
 
 function arg(item: any) {
@@ -141,25 +146,3 @@ function arg(item: any) {
 }
 
 
-
-export function MethodName(logger?: ILogger) {
-    return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-        let originalMethod = descriptor.value;
-        descriptor.value =
-
-            function (...args: any[]) {
-                let informationElement = args[0];
-                if (typeof (informationElement) === 'function') {
-                    informationElement = informationElement.name + '  ';
-                    args[0] = informationElement;
-                } else if (informationElement.constructor && informationElement.constructor.logelas) {
-                    informationElement = informationElement.constructor.logelas.__methodname;
-                    args[0] = informationElement + '  ';
-                }
-
-                let result = originalMethod.call(this, ...args);
-            }
-
-        return descriptor;
-    }
-}

@@ -7,7 +7,7 @@ export class Logs {
 
     // use the async/await pattern in your tests as you would in your code
     @Test("asychronous test")
-    @TestCase('logelas', 'logelas')
+    @TestCase('logelas.log', 'logelas')
     public async create(logName, debugName) {
         logger.logArray = [];
         let log = new Logger(logName, debugName);

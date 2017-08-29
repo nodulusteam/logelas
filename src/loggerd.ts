@@ -1,5 +1,5 @@
-import { ILogger, Logger } from './loggerClass'
-
+import { Logger } from './loggerClass'
+import { ILogger } from './ilogger';
 
 let methodIdentifier: number = 100000;
 export function Log(logger?: ILogger) {

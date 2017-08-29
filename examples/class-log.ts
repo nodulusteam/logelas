@@ -1,6 +1,6 @@
 import { Logger, Log, LogClass } from '../'
 
-const log = new Logger('test.log', 'test');
+const log = new Logger('test.log', 'test').truncate();
 
 @LogClass(log)
 export class Controller {

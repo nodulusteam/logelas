@@ -84,3 +84,7 @@ logger.error(this, 'huston we have a problem');
 logger.warn(this, 'this is the last warning');
 
 ```
+
+truncate()
+
+use `logger.truncate()` to clear the log file (useful for testing and development stages)

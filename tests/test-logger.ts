@@ -38,4 +38,4 @@ export class logger extends Logger implements ILogger {
 
 }
 
-logger.innerLogger = new Logger('alog.log', 'test');
+logger.innerLogger = new Logger('alog.log', 'test').truncate();
