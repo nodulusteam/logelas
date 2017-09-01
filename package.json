@@ -29,7 +29,7 @@
     "typescript": "^2.4.1"
   },
   "dependencies": {
-    "debug": "^3.0.0",
+    "debug": "^3.0.1",
     "log": "^1.4.0",
     "log-symbols": "^2.0.0",
     "logrotator": "^1.1.0",
