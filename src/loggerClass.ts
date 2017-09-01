@@ -3,7 +3,7 @@ const Log = require('../npm/log');
 const logSymbols = require('log-symbols');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
-import { ILogger } from './ILogger';
+import { ILogger } from './ilogger';
 import { MethodName } from './methodName';
 
 

@@ -1,4 +1,4 @@
-import {ILogger} from './ILogger';
+import {ILogger} from './ilogger';
 
 
 export function MethodName(logger?: ILogger) {
