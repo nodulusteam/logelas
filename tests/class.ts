@@ -1,13 +1,12 @@
-import { Logger, Log, LogClass } from '../'
+import { AutoLogger, Log, LogClass } from '../'
 import { logger } from './test-logger'
 
 
-@LogClass(logger)
+@LogClass(AutoLogger)
 export class Controller {
 
-    constructor()
-    {
-       
+    constructor() {
+
     }
 
     @Log()

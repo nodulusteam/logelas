@@ -73,7 +73,7 @@ exports.WARNING = 4;
  * @type Number
  */
 
-exports.NOTICE = 5;
+exports.INFO = 5;
 
 /**
  * Purely informational message.
@@ -81,7 +81,7 @@ exports.NOTICE = 5;
  * @type Number
  */
 
-exports.INFO = 6;
+exports.TRACE = 6;
 
 /**
  * Application debug messages.
@@ -91,6 +91,9 @@ exports.INFO = 6;
 
 exports.DEBUG = 7;
 
+exports.SILLY = 8;
+
+exports.VERBOSE = 9;
 /**
  * prototype.
  */
@@ -219,8 +222,8 @@ Log.prototype = {
    * @api public
    */
 
-  notice: function (msg) {
-    this.log('NOTICE', arguments);
+  trace: function (msg) {
+    this.log('TRACE', arguments);
   },
 
   /**
@@ -234,6 +237,27 @@ Log.prototype = {
     this.log('INFO', arguments);
   },
 
+    /**
+   * Log info `msg`.
+   *
+   * @param  {String} msg
+   * @api public
+   */
+
+  silly: function (msg) {
+    this.log('SILLY', arguments);
+  },
+
+      /**
+   * Log info `msg`.
+   *
+   * @param  {String} msg
+   * @api public
+   */
+
+  verbose: function (msg) {
+    this.log('VERBOSE', arguments);
+  },
   /**
    * Log debug `msg`.
    *

@@ -1,120 +1,187 @@
 
 const Log = require('../npm/log');
-const logSymbols = require('log-symbols');
+const ParentLog = require('../npm/parentlog');
+const ConsoleLog = require('../npm/consolelog');
+const SilentLog = require('../npm/silentlog');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
-import { ILogger } from './ilogger';
+import { ILogger } from './log-interface';
 import { MethodName } from './methodName';
+import { LogLevel, LogLevelStr } from './logLevel';
+import { EventEmitter } from 'events';
 
 
 
-export enum debugLevel {
-    debug = 1,
-    info = 2,
-    warn = 3,
-    error = 4
-}
 
-export class Logger implements ILogger {
+export class Logger extends EventEmitter implements ILogger {
     private debuglog: any;
     private logWriter: any;
     private _fileName: string;
-    constructor(fileName, debugName, debugLevel?: debugLevel) {
-        this.debuglog = require('debug')(debugName);
+    private _applicationName: string;
+    constructor(fileName: string, debugName: string, logLevel: LogLevel = LogLevel.Info, applicationName?: string) {
+        super();
 
+        this.debuglog = require('debug')(debugName);
+        this._applicationName = applicationName || 'tmla-application';
         var log;
         var log_dir_file = '';
         const rotator = logrotate.rotator;
+
+
+
+
+
+        var outputDevice = null;
+        // if (process.env.NODE_LOG_CONSOLE === 'true') {
+
+        //     this.on('logEvent1', (data: any) => {
+        //         console.log(data);
+        //     })
+
+        // }
         if (process.env.NODE_LOG_DIR) {
             log_dir_file = path.normalize(process.env.NODE_LOG_DIR);
+
         }
         else
             log_dir_file = './logs';
-        if (!fs.existsSync(log_dir_file)) {
-            // Create the directory if it does not exist
-            mkdirp(log_dir_file, function (err) {
-                if (err) console.error(err)
-                else {
-                }
-            });
+
+
+        if (process.env.NODE_LOG_CONSOLE !== 'true' && process.env.NODE_LOG_SILENT !== 'true') {
+            if (!fs.existsSync(log_dir_file)) {
+                // Create the directory if it does not exist
+                mkdirp(log_dir_file, function (err: any) {
+                    if (err) console.error(err)
+
+                });
+            }
         }
 
+
+        (global as any).tmla = (global as any).tmla || {};
+        (global as any).tmla.globalLoggers = (global as any).tmla.globalLoggers || {};
+        let globalLoggers = (global as any).tmla.globalLoggers;
         this._fileName = path.join(log_dir_file, fileName);
-        this.logWriter = new Log(debugLevel, fs.createWriteStream(this._fileName, { flags: 'a' }));
-        // check file rotation every 5 minutes, and rotate the file if its size exceeds 10 mb. 
-        // keep only 3 rotated files and compress (gzip) them. 
-        rotator.register(this._fileName, { schedule: '5m', size: '1m', compress: true, count: 3 });
-
-        rotator.on('error', function (err) {
-            console.log('oops, an error occured!');
-        });
-
-        // 'rotate' event is invoked whenever a registered file gets rotated 
-        rotator.on('rotate', function (file) {
-            console.log('file ' + file + ' was rotated!');
-        });
 
 
-    }
-    private handleMethodName(informationElement) {
-        if (typeof (informationElement) === 'function') {
-            informationElement = informationElement.name;
-        } else if (informationElement.constructor && informationElement.constructor.logelas) {
-            informationElement = informationElement.constructor.logelas.__methodname;
+
+   
+
+
+        if (!globalLoggers[this._fileName]) {
+            globalLoggers[this._fileName] = [];
+            if (process.env.NODE_LOG_SILENT) {
+                globalLoggers[this._fileName].push(new SilentLog(logLevel));
+            } else {
+                globalLoggers[this._fileName].push(new Log(logLevel, fs.createWriteStream(this._fileName, { flags: 'a' })));
+
+
+                // keep only 3 rotated files and compress (gzip) them.
+                rotator.register(this._fileName, { schedule: '5m', size: '1m', compress: false, count: 10 });
+
+                rotator.on('error', function (err: any) {
+                    console.log('oops, an error occured!', err);
+                });
+
+                // 'rotate' event is invoked whenever a registered file gets rotated
+                rotator.on('rotate', function (file: string) {
+                    //console.log('file ' + file + ' was rotated!');
+                });
+            }
+
+
+            if (process.env.NODE_LOG_CONSOLE === 'true') {
+                globalLoggers[this._fileName].push(new ConsoleLog(logLevel));
+            }
+
+            //globalLoggers[this._fileName] = this.logWriter;
+            this.logWriter = new ParentLog(globalLoggers[this._fileName], logLevel);
 
         }
+        else {
+            this.logWriter = new ParentLog(globalLoggers[this._fileName], logLevel);
+        }
+
+
+  
+
+
     }
 
 
     @MethodName()
-    public log(...args) {
+    public log(...args: any[]) {
         this.debuglog(...args);
         let logargs = args.map(item => arg(item));
-        this.logWriter.info(logSymbols.success, ...logargs);
+        this.emit('logEvent1', { level: 'trace', name: this._applicationName, ...logargs });
+        this.logWriter.trace(this._applicationName, ...logargs);
     }
 
     @MethodName()
-    public info(...args) {
-        let level = 2;
-        if (level >= debugLevel.info) {
+    public info(...args: any[]) {
+        if (LogLevel.Info <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
             this.debuglog(...args);
-            this.logWriter.info(logSymbols.success, ...logargs);
+            this.emit('logEvent1', { level: 'info', name: this._applicationName, ...logargs });
+            this.logWriter.info(this._applicationName, ...logargs);
         }
 
     }
 
     @MethodName()
-    public warn(...args) {
-        let level = 3;
-        if (level >= debugLevel.warn) {
+    public warn(...args: any[]) {
+        if (LogLevel.Warn <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
             this.debuglog(...args);
-            this.logWriter.warning(logSymbols.warning, ...logargs);
+            this.emit('logEvent1', { level: 'warning', name: this._applicationName, ...logargs });
+            this.logWriter.warning(this._applicationName, ...logargs);
         }
 
     }
 
     @MethodName()
-    public debug(...args) {
-        let level = 1;
-        if (level >= debugLevel.debug) {
+    public debug(...args: any[]) {
+        if (LogLevel.Info <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
             this.debuglog(...args);
-            this.logWriter.debug(logSymbols.info, ...logargs);
+            this.emit('logEvent1', { level: 'debug', name: this._applicationName, ...logargs });
+            this.logWriter.debug(this._applicationName, ...logargs);
         }
     }
 
     @MethodName()
-    public error(...args) {
-        let level = 4;
-        if (level >= debugLevel.error) {
+    public error(...args: any[]) {
+
+        let logargs = args.map(item => arg(item));
+        this.debuglog(...args);
+        this.emit('logEvent1', { level: 'error', name: this._applicationName, ...logargs });
+        this.logWriter.error(this._applicationName, ...logargs);
+
+        //output the error the the console too.
+        console.error(...logargs)
+    }
+
+
+    @MethodName()
+    public trace(...args: any[]) {
+        if (LogLevel.Trace <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
             this.debuglog(...args);
-            this.logWriter.error(logSymbols.error, ...logargs);
+            this.emit('logEvent1', { level: 'trace', name: this._applicationName, ...logargs });
+            this.logWriter.trace(this._applicationName, ...logargs);
         }
     }
 
+
+    @MethodName()
+    public silly(...args: any[]) {
+        if (LogLevel.Trace <= this.logWriter.level) {
+            let logargs = args.map(item => arg(item));
+            this.debuglog(...args);
+            this.emit('logEvent1', { level: 'silly', name: this._applicationName, ...logargs });
+            this.logWriter.silly(this._applicationName, ...logargs);
+        }
+    }
 
     public truncate() {
         fs.truncateSync(this._fileName, 0);
@@ -122,27 +189,34 @@ export class Logger implements ILogger {
     }
 }
 
-function arg(item: any) {
+function arg(singleArg: any) {
 
-    let arr: any = [];
-    if (Array.isArray(item))
-        arr = arr.concat(item);
-    else
-        arr.push(item);
 
-    return arr.map(singleArg => {
-        if (singleArg)
-            try {
-                if (typeof singleArg === 'function')
-                    return `func ${singleArg.name}`;
-                let a = typeof singleArg === 'string' ? singleArg : JSON.stringify(singleArg);
-                if (a)
-                    return a.replace(/\r\n/g, '');
+    if (singleArg)
+        try {
+            if (typeof singleArg === 'function')
+                return `func ${singleArg.name}`;
 
-            } catch (error) {
-                return '[circular]';
+            if (singleArg.stack && singleArg.message) {
+                let a = { stack: singleArg.stack, message: singleArg.message }
+                return JSON.stringify(a);
             }
-    }).join(',')
+            else if (typeof singleArg === 'object') {
+                return JSON.stringify(singleArg);
+            }
+            else {
+                // let a = typeof singleArg === 'string' ? singleArg : JSON.stringify(singleArg);
+                // if (a.length && a.length > 200)
+                //     a = a.substr(0, 200);
+                if (typeof singleArg === 'string') {
+                    return singleArg.replace(/\r\n/g, '');
+                }
+                return singleArg;
+            }
+        } catch (error) {
+            return '[circular]';
+        }
+    return '';
 }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "logelas",
-  "version": "1.0.20",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "homepage": "https://nodulusteam.github.io/logelas/",
@@ -33,6 +33,7 @@
     "log": "^1.4.0",
     "log-symbols": "^2.0.0",
     "logrotator": "^1.1.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "stack-trace": "^0.0.10"
   }
 }
