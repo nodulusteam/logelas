@@ -1,4 +1,4 @@
-import { Logger, Log, LogClass, LogLevel } from '../'
+import { Logger, LogClass, LogLevel } from '../'
 
 const log = new Logger('test.log', 'test', LogLevel.Trace).truncate();
 

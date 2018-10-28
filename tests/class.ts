@@ -1,5 +1,4 @@
-import { AutoLogger, Log, LogClass } from '../'
-import { logger } from './test-logger'
+import { AutoLogger, LogClass } from '../'
 
 
 @LogClass(AutoLogger)

@@ -9,8 +9,8 @@ const SilentLog = require('../npm/silentlog');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
 import { ILogger } from './log-interface';
-import { MethodName } from './decorators/methodName';
-import { LogLevel, LogLevelStr } from './logLevel';
+// import { MethodName } from './decorators/methodName';
+import { LogLevel } from './logLevel';
 import { EventEmitter } from 'events';
 
 

@@ -19,7 +19,7 @@
 * we still need logs!
 
  ```
-import { Logger, Log, LogClass } from 'logelas'
+import { Logger, LogClass } from 'logelas'
 const log = new Logger('test.log', 'test');
 
 @LogClass(log)
