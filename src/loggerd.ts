@@ -73,6 +73,10 @@ export function preLog(target: any, propertyKey: string, args: any, logLevel: Lo
     let logger;
     let name = extractName(target);
 
+    let method = target[propertyKey];
+    if (!method) {
+        method = target.prototype[propertyKey];
+    }
 
     if (!logger && target.logelas)
         logger = target.logelas;
@@ -80,8 +84,8 @@ export function preLog(target: any, propertyKey: string, args: any, logLevel: Lo
         logger = target.constructor.logelas;
 
     if (logger) {
-        (logger as any).__methodname = `${_methodIdentifier} :: ${name}.${propertyKey}`;
-        logger[LogLevelStr[logLevel]](`${_methodIdentifier} :: ${name}.${propertyKey} => `, parseArgs(args, target[propertyKey]), filename);
+        logger.__methodname = `${_methodIdentifier} :: ${name}.${propertyKey}`;
+        logger[LogLevelStr[logLevel]](`${_methodIdentifier} :: ${name}.${propertyKey} => `, parseArgs(args, method), filename);
     }
     return logger;
 }
