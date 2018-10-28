@@ -6,3 +6,5 @@ node_modules/
 examples/data/
 logs/
 !npm/*.js
+coverage/
+.nyc_output/
