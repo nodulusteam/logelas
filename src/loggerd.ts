@@ -43,7 +43,7 @@ function extractName(target: any) {
     return target.name;
 }
 
-function postLogError(logger: any, target: any, error: any, propertyKey: string, _methodIdentifier: number) {
+export function postLogError(logger: any, target: any, error: any, propertyKey: string, _methodIdentifier: number) {
     if (logger) {
         let name = extractName(target);
         logger.error(`${_methodIdentifier} :: ${name}.${propertyKey} ## `, error.message, error.stack);
@@ -69,7 +69,7 @@ function resolveLogLevel(target: any, logLevel: LogLevel) {
 
 }
 
-function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier: number, filename: string) {
+export function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
     let logger;
     let name = extractName(target);
 
@@ -86,9 +86,10 @@ function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel,
     return logger;
 }
 
-function postLog(logger: any, target: any, propertyKey: string, result: any, logLevel: LogLevel, _methodIdentifier: number, filename: string) {
+export function postLog(target: any, propertyKey: string, result: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
 
     let name = extractName(target);
+    let logger = target.logelas;
 
     if (result && result.toString && result.toString() === '[object Promise]') {
         result.then((data: any) => {
@@ -141,117 +142,21 @@ function parseArgs(argValues: any[], func: Function) {
 
 
 
-export function Log(logLevel: LogLevel = LogLevel.Trace) {
-    return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
-        // save a reference to the original method
-        let originalMethod = descriptor.value;
-        methodIdentifier++;
-        //methodType = methodType || MethodType.Local;
-        descriptor.value =
-            function (_methodIdentifier: number) {
-                return function (...args: any[]) {
 
 
-                    if (resolveLogLevel(target, logLevel)) {
-                        let filename = '';
-                        if (target.DEBUG_SYMBOL_ACTIVE) {
-                            var trace = stackTrace.get();
+// export function LogParam(name?: string) {
+//     return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
+//         // let existingMetadata: any[] = Reflect.getOwnMetadata(metadataKey, target, propertyKey) || [];
+//         // if (name)
+//         //     existingMetadata.push({ from: 'body', index: parameterIndex, name: name });
+//         // else
+//         //     existingMetadata.push({ from: 'body', index: parameterIndex });
 
-                            if (trace.length > 1) {
-                                filename = trace[1].getFileName() + '\tline:' + trace[1].getLineNumber();
-                            }
-                        }
-                        const logger = preLog(target, propertyKey, args, logLevel, _methodIdentifier, filename);
-
-                        try {
-                            let result = originalMethod.call(this, ...args);
-
-                            postLog(logger, target, propertyKey, result, logLevel, _methodIdentifier, filename);
-                            return result;
-
-                        } catch (error) {
-                            postLogError(logger, target, error, propertyKey, _methodIdentifier);
-
-                            throw error;
-                        }
-
-                    } else {
-
-                        let result = originalMethod.call(this, ...args);
-                        return result;
-                    }
+//         // Reflect.defineMetadata(metadataKey, existingMetadata, target, propertyKey);
+//     }
+// }
 
 
-
-
-                };
-            }(methodIdentifier)
-
-        return descriptor;
-    }
-}
-
-
-export function LogParam(name?: string) {
-    return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
-        // let existingMetadata: any[] = Reflect.getOwnMetadata(metadataKey, target, propertyKey) || [];
-        // if (name)
-        //     existingMetadata.push({ from: 'body', index: parameterIndex, name: name });
-        // else
-        //     existingMetadata.push({ from: 'body', index: parameterIndex });
-
-        // Reflect.defineMetadata(metadataKey, existingMetadata, target, propertyKey);
-    }
-}
-
-
-export function LogClass(logger: ILogger, debugSymbol?: string) {
-    return (target: any) => {
-        let filename = '';
-        if (debugSymbol) {
-            if (enabled(debugSymbol)) {
-                target.prototype.DEBUG_SYMBOL_ACTIVE = true;
-                var trace = stackTrace.get();
-                if (trace.length > 2) {
-                    filename = trace[3].getFileName() + '\tline:' + trace[3].getLineNumber();
-                }
-            }
-        }
-
-        target.logelas = logger;
-        // save a reference to the original constructor
-        var original = target;
-        methodIdentifier++;
-        // the new constructor behaviour
-        var f: any = function (_methodIdentifier) {
-            return function (...args: any[]) {
-                logger.trace(`${_methodIdentifier} :: new ${original.name}()`, parseArgs(args, original.prototype.constructor), filename);
-                return new original(...args);
-            }
-        }(methodIdentifier);
-
-        // copy prototype so intanceof operator still works
-        f.prototype = original.prototype;
-        f.logelas = logger;
-
-        //handle the static methods
-        const all = Object.getOwnPropertyNames(original)
-            .filter(prop => typeof original[prop] === 'function');
-
-        all.forEach((key) => {
-            f[key] = original[key];
-
-        })
-
-        if (original.__proto__) {
-            f = recurceCopy(f, original.__proto__);
-        }
-
-
-        // return new constructor (will override original)
-        return f;
-    }
-}
 
 const excludeList = ['apply', 'bind', 'call', 'toString', 'constructor', 'caller', 'arguments'];
 function recurceCopy(f: any, original: any) {

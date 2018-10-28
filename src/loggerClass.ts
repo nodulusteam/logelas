@@ -3,10 +3,13 @@ const Log = require('../npm/log');
 const ParentLog = require('../npm/parentlog');
 const ConsoleLog = require('../npm/consolelog');
 const SilentLog = require('../npm/silentlog');
+
+
+
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
 import { ILogger } from './log-interface';
-import { MethodName } from './methodName';
+import { MethodName } from './decorators/methodName';
 import { LogLevel, LogLevelStr } from './logLevel';
 import { EventEmitter } from 'events';
 
@@ -22,7 +25,7 @@ export class Logger extends EventEmitter implements ILogger {
         super();
 
         this.debuglog = require('debug')(debugName);
-        this._applicationName = applicationName || 'tmla-application';
+        this._applicationName = applicationName || 'application';
         var log;
         var log_dir_file = '';
         const rotator = logrotate.rotator;

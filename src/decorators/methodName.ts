@@ -1,4 +1,4 @@
-import { ILogger } from './log-interface';
+import { ILogger } from '../log-interface';
 var stackTrace = require('stack-trace');
 
 export function MethodName(logger?: ILogger) {
