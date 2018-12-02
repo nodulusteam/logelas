@@ -3,3 +3,6 @@
 examples
 .vscode
 tests
+coverage
+logs
+.nyc_output
