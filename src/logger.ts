@@ -1,6 +1,2 @@
 export {Logger} from './loggerClass';
 
-
- 
-
-

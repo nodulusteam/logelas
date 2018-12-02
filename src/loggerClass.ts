@@ -35,13 +35,13 @@ export class Logger extends EventEmitter implements ILogger {
 
 
         var outputDevice = null;
-        // if (process.env.NODE_LOG_CONSOLE === 'true') {
+        if (process.env.NODE_LOG_CONSOLE === 'true') {
 
-        //     this.on('logEvent1', (data: any) => {
-        //         console.log(data);
-        //     })
+            this.on('logEvent1', (data: any) => {
+                console.log(data);
+            })
 
-        // }
+        }
         if (process.env.NODE_LOG_DIR) {
             log_dir_file = path.normalize(process.env.NODE_LOG_DIR);
 

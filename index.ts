@@ -1,8 +1,6 @@
-export { Logger } from './src/loggerClass';
-export { AutoLogger } from './src/autoLogger';
+export { LogLevel } from './src/logLevel';
 export { ILogger } from './src/log-interface';
 export { LogClass } from './src/decorators/';
-export { LogLevel } from './src/logLevel';
-
-
+export { Logger } from './src/loggerClass';
+export { AutoLogger } from './src/autoLogger';
 

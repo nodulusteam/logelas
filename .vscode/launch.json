@@ -20,6 +20,24 @@
             }
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "E | run class autolog",
+            "program": "${workspaceRoot}/examples/class-autolog.js",
+            "cwd": "${workspaceRoot}/",
+            "console": "internalConsole",
+            "outFiles": [],
+            "sourceMaps": true,
+            "env": {
+                "PORT": "8090",
+                "DEBUG": "none",
+                "NODE_ENV": "debug",
+                "NODE_LOG_LEVEL": "trace",
+                "NODE_LOG_SYMBOL": "*",
+                "NODE_LOG_IDENTIFIER": "the app ident"
+            }
+        },
+        {
             "request": "launch",
             "console": "internalConsole",
             // Name of configuration; appears in the launch configuration drop down menu.
