@@ -20,7 +20,7 @@ var Log = exports = module.exports = function Log(logStreams, level) {
   if ('string' == typeof level) level = exports[level.toUpperCase()];
   this.level = level || exports.DEBUG;
   this.logStreams = logStreams;
-  this.stream = process.stdout;
+  this.stream = logStreams[0] || process.stdout;
   if (this.stream.readable) this.read();
 };
 

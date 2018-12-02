@@ -1,4 +1,5 @@
 import { ILogger, Logger } from '../index';
+import { LogLevel } from '../src/logLevel';
 
 export class logger extends Logger implements ILogger {
     public static logArray: string[] = [];
@@ -11,11 +12,16 @@ export class logger extends Logger implements ILogger {
             args[0] = args[0].constructor.__methodname;
 
         }
-        this.log(...args);
+       // this.log(...args);
 
         this.innerLogger.info(...args);
         this.logArray.push(args.join(' '));
     }
+    public static trace(...args) {
+        this.logArray.push(args.join(' '));
+        this.innerLogger.trace(...args);
+    }
+    
     public static info(...args) {
         this.logArray.push(args.join(' '));
         this.innerLogger.info(...args);
@@ -28,6 +34,10 @@ export class logger extends Logger implements ILogger {
         this.logArray.push(args.join(' '));
         this.innerLogger.warn(...args);
     }
+    public static silly(...args) {
+        this.logArray.push(args.join(' '));
+        this.innerLogger.silly(...args);
+    }
     public static error(...args) {
         this.logArray.push(args.join(' '));
         this.innerLogger.error(...args);
@@ -38,4 +48,4 @@ export class logger extends Logger implements ILogger {
 
 }
 
-logger.innerLogger = new Logger('alog.log', 'test').truncate();
+logger.innerLogger = new Logger('test.log', 'test', LogLevel.Trace).truncate();

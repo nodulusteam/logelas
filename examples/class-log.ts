@@ -1,11 +1,9 @@
 import { Logger, LogClass, LogLevel } from '../'
 
-const log = new Logger('test.log', 'test', LogLevel.Trace).truncate();
+const log = new Logger('test.log', 'test', LogLevel.Trace);
 
 @LogClass(log)
 export class Controller {
-
-
     public action1() {
         log.log(this, 'a message from inside the method');
         return this.action2() * 2;

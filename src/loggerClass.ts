@@ -111,7 +111,10 @@ export class Logger extends EventEmitter implements ILogger {
 
     }
 
-
+    public close() {
+        this.logWriter = null;
+        
+    }
     //  @MethodName()
     public log(...args: any[]) {
         this.debuglog(...args);

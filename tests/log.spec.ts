@@ -1,42 +1,64 @@
-import { AsyncTest, Expect, Test, TestCase, TestFixture, Timeout } from "alsatian";
+import { AsyncTest, Expect, Test, TestCase, TestFixture, Timeout } from 'alsatian';
 import { Logger } from '../'
 import { Controller } from './class'
 import { logger } from './test-logger'
-@TestFixture("Create logs")
+import { LogLevel } from '../src/logLevel';
+import { AutoLogger } from '../src/autoLogger';
+@TestFixture('Create logs')
 export class Logs {
-
     // use the async/await pattern in your tests as you would in your code
-    @Test("asychronous test")
-    @TestCase('logelas.log', 'logelas')
-    public async create(logName, debugName) {
-        logger.logArray = [];
-        let log = new Logger(logName, debugName);
-        Expect(log).toBeDefined();
+    @Timeout(10 * 1000)
+    @AsyncTest('asychronous test')
+    @TestCase('trace-log.log', '', LogLevel.Trace)
+    @TestCase('info-log.log', '', LogLevel.Info)
+    @TestCase('error-log.log', '', LogLevel.Error)
+    public async create(logName, debugName, logLevel) {
+        const log = new Logger(logName, debugName, logLevel).truncate();
+        log.trace('trace messgae');
+        log.info('info messgae');
+        log.error('error message');
+
+        await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                Expect(log).toBeDefined();
+                resolve();
+                //  log.close();
+
+            }, 2000);
+        });
     }
 
 
-    @TestCase('logelas.log', 'logelas')
-    public async testmethod(logName, debugName) {
+    @AsyncTest()
+    @TestCase()
+    public async testmethod() {
         logger.logArray = [];
         let object = new Controller();
-        let result = object.action2(90, 80);
+        let result = await object.action2(90, 80);
         let stringResultOfLog = JSON.stringify(logger.logArray);
-        let expected = `["100003 :: new Controller() ","100002 :: Controller.action2 =>  90,80","100001 :: Controller.action1 =>  90,80","100001 :: Controller.action1 <=  7200","100002 :: Controller.action2 <=  7200"]`
-        
+        let expected = `["10000003 :: Controller.action2 =>  ...args = 90 "," a message from inside the method","10000002 :: Controller.action1 =>  ...args = 90 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`
         Expect(stringResultOfLog).toBe(expected);
     }
 
     @TestCase('xxxx')
     @TestCase('test')
     public async testDebugSymbols(debugSymbol) {
-        process.env.DEBUG=debugSymbol;
+        process.env.DEBUG = debugSymbol;
         logger.logArray = [];
         let object = new Controller();
         let result = object.action2(90, 80);
         let stringResultOfLog = JSON.stringify(logger.logArray);
 
-        let expected = `["100003 :: new Controller() ","100002 :: Controller.action2 =>  90,80","100001 :: Controller.action1 =>  90,80","100001 :: Controller.action1 <=  7200","100002 :: Controller.action2 <=  7200"]`
+        let expected = `["10000003 :: Controller.action2 =>  ...args = 90 "," a message from inside the method","10000002 :: Controller.action1 =>  ...args = 90 ","10000002 :: Controller.action1 <=  7200"]`
         Expect(stringResultOfLog).toBe(expected);
+    }
+
+
+    @AsyncTest()
+    @TestCase()
+    public async testAutoLogger() {
+        AutoLogger.info('testing AutoLogger');
+        Expect(AutoLogger).toBe(AutoLogger);
     }
 
 }

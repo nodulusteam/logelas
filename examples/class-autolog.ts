@@ -1,4 +1,5 @@
-import { AutoLogger, LogClass, LogLevel } from '../'
+import { LogClass, LogLevel } from '../'
+import { AutoLogger } from '../auto';
 
 const log = AutoLogger;
 
