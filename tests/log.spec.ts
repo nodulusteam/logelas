@@ -35,10 +35,26 @@ export class Logs {
         logger.logArray = [];
         let object = new Controller();
         let result = await object.action2(90, 80);
+
         let stringResultOfLog = JSON.stringify(logger.logArray);
         let expected = `["10000003 :: Controller.action2 =>  ...args = 90 "," a message from inside the method","10000002 :: Controller.action1 =>  ...args = 90 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`
         Expect(stringResultOfLog).toBe(expected);
     }
+
+
+
+    @AsyncTest()
+    @TestCase()
+    public async testMoreMethod() {
+        logger.logArray = [];
+        let object = new Controller();
+        await object.action2(90, 80);
+        await object.action3(90, 50);
+        await object.action4(90, 80);
+        Expect(true).toBe(true);
+    }
+
+
 
     @TestCase('xxxx')
     @TestCase('test')

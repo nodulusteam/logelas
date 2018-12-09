@@ -20,4 +20,15 @@ export class Controller {
         logger.log(this, 'a message from inside the method');
         return this.action1(min, max);
     }
+
+    public async action3(min, max) {
+        logger.log(this, 'a message from inside the method');
+        return this.action1(min, max);
+    }
+
+    public async action4(min, max) {
+        logger.log(this, 'a message from inside the method');
+        return this.action1(min, max);
+    }
+
 }

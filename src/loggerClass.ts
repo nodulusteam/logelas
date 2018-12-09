@@ -9,7 +9,7 @@ const SilentLog = require('../npm/silentlog');
 const fs = require('fs'), path = require('path'), mkdirp = require('mkdirp');
 const logrotate = require('logrotator');
 import { ILogger } from './log-interface';
-// import { MethodName } from './decorators/methodName';
+import { MethodName } from './decorators/methodName';
 import { LogLevel } from './logLevel';
 import { EventEmitter } from 'events';
 
@@ -113,9 +113,9 @@ export class Logger extends EventEmitter implements ILogger {
 
     public close() {
         this.logWriter = null;
-        
+
     }
-    //  @MethodName()
+    @MethodName()
     public log(...args: any[]) {
         this.debuglog(...args);
         let logargs = args.map(item => arg(item));
@@ -123,7 +123,7 @@ export class Logger extends EventEmitter implements ILogger {
         this.logWriter.trace(this._applicationName, ...logargs);
     }
 
-    // @MethodName()
+    @MethodName()
     public info(...args: any[]) {
         if (LogLevel.Info <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
@@ -134,7 +134,7 @@ export class Logger extends EventEmitter implements ILogger {
 
     }
 
-    // @MethodName()
+    @MethodName()
     public warn(...args: any[]) {
         if (LogLevel.Warn <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
@@ -145,7 +145,7 @@ export class Logger extends EventEmitter implements ILogger {
 
     }
 
-    //@MethodName()
+    @MethodName()
     public debug(...args: any[]) {
         if (LogLevel.Info <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
@@ -155,7 +155,7 @@ export class Logger extends EventEmitter implements ILogger {
         }
     }
 
-    //@MethodName()
+    @MethodName()
     public error(...args: any[]) {
 
         let logargs = args.map(item => arg(item));
@@ -168,7 +168,7 @@ export class Logger extends EventEmitter implements ILogger {
     }
 
 
-    //@MethodName()
+    @MethodName()
     public trace(...args: any[]) {
         if (LogLevel.Trace <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));
@@ -179,7 +179,7 @@ export class Logger extends EventEmitter implements ILogger {
     }
 
 
-    // @MethodName()
+    @MethodName()
     public silly(...args: any[]) {
         if (LogLevel.Trace <= this.logWriter.level) {
             let logargs = args.map(item => arg(item));

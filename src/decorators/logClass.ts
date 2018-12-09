@@ -23,6 +23,7 @@ export function LogClass(logger: ILogger, options: ClassLoggerOptions = defaultC
             if (typeof (originalMethod) !== "function" || originalMethod.__loggerMonkeyPatchCompleted === true) {
                 return;
             }
+            target.__methodName = methodName;
             target.prototype[methodName] = getMonkeyPatchMethod(target, originalMethod, methodName, options.methodOptions as any);
         });
 
