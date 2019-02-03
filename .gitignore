@@ -8,3 +8,4 @@ logs/
 !npm/*.js
 coverage/
 .nyc_output/
+.scannerwork/
