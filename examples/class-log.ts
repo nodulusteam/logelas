@@ -2,6 +2,9 @@ import { Logger, LogClass, LogLevel } from '../'
 
 const log = new Logger('test.log', 'test', LogLevel.Trace);
 
+log.on('test.log', (logEntry) => {
+    console.log(logEntry);
+});
 @LogClass(log)
 export class Controller {
     public action1() {
@@ -41,6 +44,7 @@ export class Controller {
 
 let instance = new Controller();
 instance.action1();
+ 
 
 
 

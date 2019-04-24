@@ -1,4 +1,4 @@
-import { LogLevel } from "../logLevel";
+import { LogLevel } from './logLevel';
 
 export interface LogFunction {
     (message: string): void

@@ -1,5 +1,5 @@
 import { ILogger, Logger } from '../index';
-import { LogLevel } from '../src/logLevel';
+import { LogLevel } from '../src/options/logLevel';
 
 export class logger extends Logger implements ILogger {
     public static logArray: string[] = [];
@@ -48,4 +48,4 @@ export class logger extends Logger implements ILogger {
 
 }
 
-logger.innerLogger = new Logger('test.log', 'test', LogLevel.Trace).truncate();
+logger.innerLogger = new Logger('test.log', 'test', LogLevel.Trace);

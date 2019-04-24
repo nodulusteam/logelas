@@ -1,5 +1,5 @@
 import { Logger } from './logger'
-import { LogLevel, LogLevelStr } from './logLevel'
+import { LogLevel, LogLevelStr } from './options/logLevel'
 
 const logName = process.env.NODE_LOG_NAME || 'general.log';
 const debugSymbol = process.env.NODE_LOG_SYMBOL || 'app';

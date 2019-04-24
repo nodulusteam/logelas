@@ -1,6 +1,6 @@
 {
   "name": "logelas",
-  "version": "3.0.14",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
   "homepage": "https://nodulusteam.github.io/logelas/",
@@ -26,18 +26,14 @@
   "license": "(MIT OR Apache-2.0)",
   "devDependencies": {
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.31",
+    "@types/node": "^10.0.0",
     "alsatian": "^2.0.0",
     "nyc": "^13.1.0",
-    "typescript": "^2.4.1"
+    "typescript": "^3.4.0"
   },
   "dependencies": {
     "debug": "^3.0.1",
     "lodash": "^4.17.11",
-    "log": "^1.4.0",
-    "log-symbols": "^2.0.0",
-    "logrotator": "^1.1.0",
-    "mkdirp": "^0.5.1",
     "reflect-metadata": "^0.1.12",
     "stack-trace": "^0.0.10"
   }

@@ -1,8 +1,9 @@
 import { AsyncTest, Expect, Test, TestCase, TestFixture, Timeout } from 'alsatian';
+process.env.NODE_LOG_CONSOLE = 'true';
 import { Logger } from '../'
 import { Controller } from './class'
 import { logger } from './test-logger'
-import { LogLevel } from '../src/logLevel';
+import { LogLevel } from '../src/options/logLevel';
 import { AutoLogger } from '../src/autoLogger';
 @TestFixture('Create logs')
 export class Logs {
@@ -13,10 +14,19 @@ export class Logs {
     @TestCase('info-log.log', '', LogLevel.Info)
     @TestCase('error-log.log', '', LogLevel.Error)
     public async create(logName, debugName, logLevel) {
-        const log = new Logger(logName, debugName, logLevel).truncate();
+        const log = new Logger(logName, debugName, logLevel);
         log.trace('trace messgae');
         log.info('info messgae');
-        log.error('error message');
+        log.log('log messgae');
+        const er = new Error('there is an error');
+        er.message = 'there is an error';
+
+        log.error('error message', er);
+        log.warn('warn message', { some: 'property' });
+
+        log.debug('function message', () => { });
+
+        log.silly('silly message',TestFixture);
 
         await new Promise((resolve, reject) => {
             setTimeout(() => {

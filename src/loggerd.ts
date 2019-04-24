@@ -1,39 +1,33 @@
-import { Logger } from './loggerClass'
-import { ILogger } from './log-interface';
-import { LogLevel, LogLevelStr } from './logLevel';
+ 
+import { LogLevel, LogLevelStr } from './options/logLevel';
 import 'reflect-metadata';
-
-var stackTrace = require('stack-trace');
-let methodIdentifier: number = 100000;
+ 
 const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
-const namespaces = process.env.DEBUG;
+//const namespaces = process.env.DEBUG;
 
-const names: Array<any> = [];
-const skips: Array<any> = [];
+// const names: Array<any> = [];
+// const skips: Array<any> = [];
 
-function enable(namespaces: any) {
-    //exports.save(namespaces);
-    var i;
-    var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-    var len = split.length;
+// function enable(namespaces: any) {
+//     //exports.save(namespaces);
+//     var i;
+//     var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+//     var len = split.length;
 
-    for (i = 0; i < len; i++) {
-        if (!split[i]) continue; // ignore empty strings
-        namespaces = split[i].replace(/\*/g, '.*?');
-        if (namespaces[0] === '-') {
-            skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-        } else {
-            names.push(new RegExp('^' + namespaces + '$'));
-        }
-    }
-    // for (i = 0; i < exports.instances.length; i++) {
-    //   var instance = exports.instances[i];
-    //   instance.enabled = exports.enabled(instance.namespace);
-    // }
-}
+//     for (i = 0; i < len; i++) {
+//         if (!split[i]) continue; // ignore empty strings
+//         namespaces = split[i].replace(/\*/g, '.*?');
+//         if (namespaces[0] === '-') {
+//             skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+//         } else {
+//             names.push(new RegExp('^' + namespaces + '$'));
+//         }
+//     }
+ 
+// }
 
-enable(namespaces);
+// enable(namespaces);
 
 
 function extractName(target: any) {
@@ -134,89 +128,13 @@ function parseArgs(argValues: any[], func: Function) {
     }).map(function (argNameIndex: number): any {
         if (argNameIndex === -1 || argNameIndex >= argValues.length) return;
         if (typeof argValues[argNameIndex] === 'function') {
-            return `${argNames[argNameIndex]} = ${argValues[argNameIndex].name}`;//{ [argNames[argNameIndex]]: argValues[argNameIndex] }
+            return `${argNames[argNameIndex]} = ${argValues[argNameIndex].name}`;
 
         } else {
 
-            return `${argNames[argNameIndex]} = ${stringify(argValues[argNameIndex])}`;//{ [argNames[argNameIndex]]: argValues[argNameIndex] }
+            return `${argNames[argNameIndex]} = ${stringify(argValues[argNameIndex])}`;
 
         }
     }).join(' | | ');
 }
-
-
-
-
-
-// export function LogParam(name?: string) {
-//     return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
-//         // let existingMetadata: any[] = Reflect.getOwnMetadata(metadataKey, target, propertyKey) || [];
-//         // if (name)
-//         //     existingMetadata.push({ from: 'body', index: parameterIndex, name: name });
-//         // else
-//         //     existingMetadata.push({ from: 'body', index: parameterIndex });
-
-//         // Reflect.defineMetadata(metadataKey, existingMetadata, target, propertyKey);
-//     }
-// }
-
-
-
-const excludeList = ['apply', 'bind', 'call', 'toString', 'constructor', 'caller', 'arguments'];
-function recurceCopy(f: any, original: any) {
-    if (!original)
-        return f;
-
-    const all = Object.getOwnPropertyNames(original)
-        .filter(prop => {
-            try {
-                return excludeList.indexOf(prop) === -1 && typeof original[prop] === 'function';
-            } catch (error) {
-                return false;
-            }
-        });
-
-
-    all.forEach((key) => {
-        f[key] = original[key];
-
-    });
-
-    if (original.__proto__) {
-        f = recurceCopy(f, original.__proto__);
-    }
-    return f;
-
-}
-
-
-
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-
-
-function enabled(name: string) {
-
-    if (name[name.length - 1] === '*') {
-        return true;
-    }
-    var i, len;
-    for (i = 0, len = skips.length; i < len; i++) {
-        if (skips[i].test(name)) {
-            return false;
-        }
-    }
-    for (i = 0, len = names.length; i < len; i++) {
-        if (names[i].test(name)) {
-            return true;
-        }
-    }
-    return false;
-}
+ 
