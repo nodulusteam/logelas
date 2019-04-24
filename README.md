@@ -4,8 +4,10 @@
 <img src="./logelas.png" alt="Drawing" style="max-width: 150px!important;"/>
 </a>
 
-[<img src="https://travis-ci.org/nodulusteam/logelas.svg?branch=master">](https://travis-ci.org/nodulusteam/logelas)
- 
+[<img src="https://travis-ci.org/nodulusteam/logelas.svg?branch=master">](https://travis-ci.org/nodulusteam/logelas) 
+ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=alert_status)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=bugs)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 
 ### motivation
 * we need logs
