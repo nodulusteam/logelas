@@ -49,6 +49,7 @@ export class Logs {
         let stringResultOfLog = JSON.stringify(logger.logArray);
         let expected = `["10000003 :: Controller.action2 =>  ...args = 90 "," a message from inside the method","10000002 :: Controller.action1 =>  ...args = 90 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`
         Expect(stringResultOfLog).toBe(expected);
+        return result;
     }
 
 
@@ -77,6 +78,7 @@ export class Logs {
 
         let expected = `["10000003 :: Controller.action2 =>  ...args = 90 "," a message from inside the method","10000002 :: Controller.action1 =>  ...args = 90 ","10000002 :: Controller.action1 <=  7200"]`
         Expect(stringResultOfLog).toBe(expected);
+        return result;
     }
 
 

@@ -66,6 +66,7 @@ export class Logger extends EventEmitter implements ILogger {
 
     @MethodName()
     public error(...args: any[]) {
+        console.error(...args);
         this.produce('error', ...args);
     }
 
