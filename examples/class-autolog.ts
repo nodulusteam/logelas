@@ -1,4 +1,4 @@
-import { LogClass, LogLevel } from '../'
+import { LogClass } from '../'
 import { AutoLogger } from '../auto';
 
 const log = AutoLogger;
@@ -26,25 +26,9 @@ export class Controller {
 
 
     public action4() {
-        log.debug(this, 'a message from inside the method');
-        //this.throws();
+        log.debug(this, 'a message from inside the method');     
         return 4;
     }
-
-
-    // @Log()
-    // public throws() {
-    //     throw (new Error('my bad'))
-    // }
 }
-
-
-
-
-
 let instance = new Controller();
 instance.action1();
-
-
-
-

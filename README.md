@@ -27,7 +27,7 @@ const log = new Logger('test.log', 'test');
 @LogClass(log)
 export class Controller {
 
-    @Log()
+   
     public action1() {
         log.error(this, 'there is the rror log');
     }
