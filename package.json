@@ -3,6 +3,7 @@
   "version": "4.0.4",
   "description": "",
   "main": "index.js",
+  "types": "index.d.ts",
   "homepage": "https://nodulusteam.github.io/logelas/",
   "keywords": [
     "nodulus",
