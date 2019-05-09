@@ -6,3 +6,9 @@ tests
 coverage
 logs
 .nyc_output
+.npmrc
+_config.yml
+.travis.yml
+sonar-project.properties
+tsconfig.json
+.scannerwork

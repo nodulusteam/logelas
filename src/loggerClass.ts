@@ -38,9 +38,9 @@ export class Logger extends EventEmitter implements ILogger {
         this.emit(this.fileName, { level, name: this._applicationName, ...logargs });
 
     }
-    @MethodName()
+    
     public log(...args: any[]) {
-        this.produce('trace', ...args);
+        this.trace(...args);
     }
 
     @MethodName()
@@ -59,26 +59,24 @@ export class Logger extends EventEmitter implements ILogger {
 
     @MethodName()
     public debug(...args: any[]) {
-        if (LogLevel.Trace <= this.logWriter.level) {
-            this.produce('debug', ...args);
-        }
+        this.trace(...args);
     }
 
     @MethodName()
     public error(...args: any[]) {
-        console.error(...args);
+        console.error(JSON.stringify(args));
         this.produce('error', ...args);
     }
 
 
     @MethodName()
     public trace(...args: any[]) {
-        this.produce('trace', ...args);
-
+        if (LogLevel.Trace <= this.logWriter.level) {
+            this.produce('trace', ...args);
+        }
     }
 
-
-    @MethodName()
+   
     public silly(...args: any[]) {
         this.trace(...args);
     }

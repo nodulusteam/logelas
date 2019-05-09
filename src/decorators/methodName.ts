@@ -18,17 +18,20 @@ export function MethodName(logger?: ILogger) {
 
                 if (typeof (informationElement) === 'object') {
 
+
                     try {
-                        args.unshift(informationElement.__proto__.constructor.name);
+                        if (informationElement.__proto__.constructor.name) {
+                            args.unshift(informationElement.__proto__.constructor.name);
+                        }
                     }
                     catch (error) {
-                        args.unshift(informationElement.name + '  ');
+
                     }
 
-                    var trace = stackTrace.get();
-                    if (trace.length > 1) {
-                        args.unshift(`${args[0]}:: ${trace[1].getFunctionName()}::line:${trace[1].getLineNumber()}`);
-                    }
+                    // var trace = stackTrace.get();
+                    // if (trace.length > 1) {
+                    //     args.unshift(`${args[0]}:: ${trace[1].getFunctionName()}::line:${trace[1].getLineNumber()}`);
+                    // }
                 }
                 originalMethod.call(this, ...args);
             }
