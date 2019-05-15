@@ -1,12 +1,11 @@
 import { ILogger } from '../log-interface';
-var stackTrace = require('stack-trace');
 
 export function MethodName(logger?: ILogger) {
     return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         let originalMethod = descriptor.value;
         descriptor.value =
             function (...args: any[]) {
-                const name = target.name;
+                
 
                 let informationElement = args[0];
                 if (informationElement && informationElement.logelas) {

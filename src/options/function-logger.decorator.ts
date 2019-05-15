@@ -4,7 +4,7 @@ import { LogLevel } from './logLevel';
 let methodIdentifier = 10000000;
 
 const disableMethodLogger = function (): Function {
-  return function (target, methodName: string, descriptor) {
+  return function (target: any, methodName: string, descriptor: any) {
     if (descriptor === undefined) {
       descriptor = Object.getOwnPropertyDescriptor(target, methodName);
     }
@@ -18,7 +18,7 @@ const disableMethodLogger = function (): Function {
 export const getMonkeyPatchMethod = function (target: any, method: Function, methodName: string, options: FunctionLoggerOptions): Function {
   methodIdentifier++
   const _methodIdentifier = methodIdentifier;
-  return function (...args) {
+  return function (...args: any) {
     preLog(target, methodName, args, options.logLevel || LogLevel.Trace, _methodIdentifier);
     const result = method.apply(this, args);
     postLog(target, methodName, result, options.logLevel || LogLevel.Trace, _methodIdentifier);

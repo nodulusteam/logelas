@@ -32,13 +32,13 @@ export class Logger extends EventEmitter implements ILogger {
         this.logWriter = null;
 
     }
-    public produce(level, ...args: any[]) {
+    public produce(level: any, ...args: any[]) {
         const logargs = args.map(item => arg(item));
         this.debuglog(...args);
         this.emit(this.fileName, { level, name: this._applicationName, ...logargs });
 
     }
-    
+
     public log(...args: any[]) {
         this.trace(...args);
     }
@@ -76,7 +76,7 @@ export class Logger extends EventEmitter implements ILogger {
         }
     }
 
-   
+
     public silly(...args: any[]) {
         this.trace(...args);
     }

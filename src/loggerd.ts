@@ -44,24 +44,24 @@ export function postLogError(logger: any, target: any, error: any, propertyKey: 
     }
 }
 
-function resolveLogLevel(target: any, logLevel: LogLevel) {
-    let logger;
+// function resolveLogLevel(target: any, logLevel: LogLevel) {
+//     let logger;
 
-    if (!logger && target.logelas)
-        logger = target.logelas;
-    if (!logger && target.constructor.logelas)
-        logger = target.constructor.logelas;
+//     if (!logger && target.logelas)
+//         logger = target.logelas;
+//     if (!logger && target.constructor.logelas)
+//         logger = target.constructor.logelas;
 
-    if (logger && logger.logWriter) {
-        return logLevel <= logger.logWriter.level;
-    } else {
-        return true;
-    }
-
-
+//     if (logger && logger.logWriter) {
+//         return logLevel <= logger.logWriter.level;
+//     } else {
+//         return true;
+//     }
 
 
-}
+
+
+// }
 
 export function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
     let logger;

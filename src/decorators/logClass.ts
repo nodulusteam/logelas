@@ -1,8 +1,8 @@
 import { ILogger } from "../log-interface";
-import { ClassLoggerOptions, FunctionLoggerOptions } from '../options/';
+import { ClassLoggerOptions } from '../options/';
 import { defaultFunctionOptions, defaultClassOptions } from '../options/default-options/';
 import { getMonkeyPatchMethod } from '../options/function-logger.decorator';
-import * as _ from 'lodash';
+
 
 export function LogClass(logger: ILogger, options: ClassLoggerOptions = defaultClassOptions, debugSymbol?: string) {
     options.methodOptions = options.methodOptions || defaultFunctionOptions;
