@@ -9,6 +9,7 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=bugs)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 
+
 ### motivation
 When we build large projects using modules and components, it is best to implement a logging abstraction rather than actual loging library bindings and dependecies, we can than aggregate the virtual loggers to log transports available at the installing application.
 
