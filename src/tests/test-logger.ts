@@ -31,7 +31,7 @@ export class logger extends Logger implements ILogger {
         this.innerLogger = new Logger(logFile, debugSymbol);
     }
     public static act(func, args) {
-        func(...args);
+        func.apply(this, args);
         this.logArray.push(args.join(' '));
     }
 

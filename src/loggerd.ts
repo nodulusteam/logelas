@@ -1,34 +1,9 @@
- 
+
 import { LogLevel, LogLevelStr } from './options/logLevel';
 import 'reflect-metadata';
- 
+
 const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
-//const namespaces = process.env.DEBUG;
-
-// const names: Array<any> = [];
-// const skips: Array<any> = [];
-
-// function enable(namespaces: any) {
-//     //exports.save(namespaces);
-//     var i;
-//     var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-//     var len = split.length;
-
-//     for (i = 0; i < len; i++) {
-//         if (!split[i]) continue; // ignore empty strings
-//         namespaces = split[i].replace(/\*/g, '.*?');
-//         if (namespaces[0] === '-') {
-//             skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-//         } else {
-//             names.push(new RegExp('^' + namespaces + '$'));
-//         }
-//     }
- 
-// }
-
-// enable(namespaces);
-
 
 function extractName(target: any) {
     if (!target.name && target.constructor) {
@@ -44,27 +19,9 @@ export function postLogError(logger: any, target: any, error: any, propertyKey: 
     }
 }
 
-// function resolveLogLevel(target: any, logLevel: LogLevel) {
-//     let logger;
-
-//     if (!logger && target.logelas)
-//         logger = target.logelas;
-//     if (!logger && target.constructor.logelas)
-//         logger = target.constructor.logelas;
-
-//     if (logger && logger.logWriter) {
-//         return logLevel <= logger.logWriter.level;
-//     } else {
-//         return true;
-//     }
-
-
-
-
-// }
 
 export function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
-    let logger;
+    let logger: any;
     let name = extractName(target);
 
     let method = target[propertyKey];
@@ -137,4 +94,4 @@ function parseArgs(argValues: any[], func: Function) {
         }
     }).join(' | | ');
 }
- 
+

@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 
 export class Logger extends EventEmitter implements ILogger {
     private debuglog: any;
-    private logWriter: any;
+    level: any;
 
     private _applicationName: string;
     constructor(public fileName: string, debugName: string, logLevel: LogLevel = LogLevel.Info, applicationName?: string) {
@@ -17,11 +17,11 @@ export class Logger extends EventEmitter implements ILogger {
                 console.log(data);
             });
         }
-        this.logWriter = { level: logLevel };// new ParentLog(logLevel);
+        this.level = logLevel;
     }
 
     public close() {
-        this.logWriter = null;
+        return true;
 
     }
     public produce(level: any, ...args: any[]) {
@@ -37,14 +37,14 @@ export class Logger extends EventEmitter implements ILogger {
 
 
     public info(...args: any[]) {
-        if (LogLevel.Info <= this.logWriter.level) {
+        if (LogLevel.Info <= this.level) {
             this.produce('info', ...args);
         }
     }
 
 
     public warn(...args: any[]) {
-        if (LogLevel.Warn <= this.logWriter.level) {
+        if (LogLevel.Warn <= this.level) {
             this.produce('warning', ...args);
         }
     }
@@ -77,7 +77,7 @@ export class Logger extends EventEmitter implements ILogger {
 
 
     public trace(...args: any[]) {
-        if (LogLevel.Trace <= this.logWriter.level) {
+        if (LogLevel.Trace <= this.level) {
             this.produce('trace', ...args);
         }
     }
