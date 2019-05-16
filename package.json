@@ -1,6 +1,6 @@
 {
   "name": "logelas",
-  "version": "4.0.13",
+  "version": "4.0.14",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
