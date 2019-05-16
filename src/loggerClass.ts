@@ -1,14 +1,6 @@
-
-
-
-
 import { ILogger } from './log-interface';
-import { MethodName } from './decorators/methodName';
 import { LogLevel } from './options/logLevel';
 import { EventEmitter } from 'events';
-
-
-
 
 export class Logger extends EventEmitter implements ILogger {
     private debuglog: any;
@@ -43,33 +35,47 @@ export class Logger extends EventEmitter implements ILogger {
         this.trace(...args);
     }
 
-    @MethodName()
+
     public info(...args: any[]) {
         if (LogLevel.Info <= this.logWriter.level) {
             this.produce('info', ...args);
         }
     }
 
-    @MethodName()
+
     public warn(...args: any[]) {
         if (LogLevel.Warn <= this.logWriter.level) {
             this.produce('warning', ...args);
         }
     }
 
-    @MethodName()
+
     public debug(...args: any[]) {
         this.trace(...args);
     }
 
-    @MethodName()
+
     public error(...args: any[]) {
+        args.forEach((arg) => {
+            if (typeof arg === 'object') {
+                ["message", "stack"].forEach(
+                    function iterator(key) {
+                        if (arg[key]) {
+                            arg.error = arg.error || {};
+                            arg.error[key] = arg[key];
+                        }
+                    }
+                );
+            }
+        });
+
+
         console.error(JSON.stringify(args));
         this.produce('error', ...args);
     }
 
 
-    @MethodName()
+
     public trace(...args: any[]) {
         if (LogLevel.Trace <= this.logWriter.level) {
             this.produce('trace', ...args);
@@ -84,8 +90,6 @@ export class Logger extends EventEmitter implements ILogger {
 
 
 function arg(singleArg: any) {
-
-
     if (singleArg)
         try {
             if (typeof singleArg === 'function')
@@ -99,9 +103,6 @@ function arg(singleArg: any) {
                 return JSON.stringify(singleArg);
             }
             else {
-                // let a = typeof singleArg === 'string' ? singleArg : JSON.stringify(singleArg);
-                // if (a.length && a.length > 200)
-                //     a = a.substr(0, 200);
                 if (typeof singleArg === 'string') {
                     return singleArg.replace(/\r\n/g, '');
                 }

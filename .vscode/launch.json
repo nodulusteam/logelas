@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "E | run class log",
-            "program": "${workspaceRoot}/examples/class-log.js",
+            "program": "${workspaceRoot}/build/examples/class-log.js",
             "cwd": "${workspaceRoot}/",
             "console": "internalConsole",
             "outFiles": [],
@@ -23,7 +23,7 @@
             "type": "node",
             "request": "launch",
             "name": "E | run class autolog",
-            "program": "${workspaceRoot}/examples/class-autolog.js",
+            "program": "${workspaceRoot}/build/examples/class-autolog.js",
             "cwd": "${workspaceRoot}/",
             "console": "internalConsole",
             "outFiles": [],
@@ -50,7 +50,7 @@
             "stopOnEntry": false,
             // Command line arguments passed to the program.
             "args": [
-                "tests/log.spec.js"
+                "build/tests/log.spec.js"
             ],
             "sourceMaps": true,
             // Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.

@@ -17,17 +17,17 @@ export class Controller {
 
 
     public async action2(min, max) {
-        logger.log(this, 'a message from inside the method');
+        logger.log(this, 'a log message from inside the method');
         return this.action1(min, max);
     }
 
     public async action3(min, max) {
-        logger.log(this, 'a message from inside the method');
+        logger.warn(this, 'a warn message from inside the method');
         return this.action1(min, max);
     }
 
     public async action4(min, max) {
-        logger.log(this, 'a message from inside the method');
+        logger.info(this, 'an info message from inside the method');
         return this.action1(min, max);
     }
 
