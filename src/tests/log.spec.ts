@@ -3,8 +3,8 @@ process.env.NODE_LOG_CONSOLE = 'true';
 import { Logger } from '../'
 import { Controller } from './class'
 import { logger } from './test-logger'
-import { LogLevel } from '../src/options/logLevel';
-import { AutoLogger } from '../src/autoLogger';
+import { LogLevel } from '../options/logLevel';
+import { AutoLogger } from '../autoLogger';
 @TestFixture('Create logs')
 export class Logs {
     // use the async/await pattern in your tests as you would in your code

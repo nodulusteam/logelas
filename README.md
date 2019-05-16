@@ -10,24 +10,16 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 
 ### motivation
-* we need logs
-* we are: 
-    * too lazy
-    * forget   
-    * it's to complicated
-    * logging is for the weak
-    * etc...
+When we build large projects using modules and components, it is best to implement a logging abstraction rather than actual loging library bindings and dependecies, we can than aggregate the virtual loggers to log transports available at the installing application.
 
-* we still need logs!
+Here is a small example of a class decorated with LogClass decorator.
 
- ```
-import { Logger, LogClass } from 'logelas'
-const log = new Logger('test.log', 'test');
+ ```typescript
+import { Logger, LogClass } from 'logelas'; // import logelas
+const log = new Logger('test.log', 'test'); // create a new virtual logger
 
-@LogClass(log)
-export class Controller {
-
-   
+@LogClass(log) // provide the logger to the decorator
+export class Controller {   
     public action1() {
         log.error(this, 'there is the rror log');
     }
@@ -35,11 +27,26 @@ export class Controller {
 
  ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Logger
 create a file based logger
 
 `new Logger([filename], [debugSymbol])`
-
 
 ## @LogClass, @Log  decorators
 

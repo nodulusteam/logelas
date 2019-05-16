@@ -2,8 +2,8 @@
   "name": "logelas",
   "version": "4.0.9",
   "description": "",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "homepage": "https://nodulusteam.github.io/logelas/",
   "keywords": [
     "nodulus",
@@ -14,10 +14,9 @@
   "scripts": {
     "sonar": "sonar-scanner.bat -Dsonar.projectKey=nodulusteam_logelas -Dsonar.organization=nodulusteam-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=d907dfcf01af9b168545db0d763a3ba697386a5b",
     "prepare": "npm test",
-    "prepublishOnly": "npm version patch",
-    "build": "tsc",
+    "build": "trash build && tsc",
     "test": "nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
-    "test:coverage": "npm run build &&  set test='true'&alsatian tests/*.spec.js"
+    "test:coverage": "npm run build &&  set test='true'&alsatian build/tests/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -26,10 +25,10 @@
   "author": "nodulusteam <nodulusteam@gmail.com> (https://nodulusteam.github.io/logelas/)",
   "license": "(MIT OR Apache-2.0)",
   "devDependencies": {
-    "@types/mocha": "^2.2.41",
     "@types/node": "^10.0.0",
     "alsatian": "^2.0.0",
     "nyc": "^13.1.0",
+    "trash-cli": "^1.4.0",
     "typescript": "^3.4.0"
   },
   "dependencies": {

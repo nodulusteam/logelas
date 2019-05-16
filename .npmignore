@@ -1,5 +1,4 @@
-*.ts
-!*.d.ts
+src
 examples
 .vscode
 tests

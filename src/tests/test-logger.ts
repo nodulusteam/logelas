@@ -1,5 +1,5 @@
-import { ILogger, Logger } from '../index';
-import { LogLevel } from '../src/options/logLevel';
+import { ILogger, Logger } from '../';
+import { LogLevel } from '../options/logLevel';
 
 export class logger extends Logger implements ILogger {
     public static logArray: string[] = [];

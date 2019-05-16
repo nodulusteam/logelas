@@ -1,1 +1,0 @@
-export { AutoLogger } from './src/autoLogger';
