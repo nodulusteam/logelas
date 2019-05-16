@@ -13,10 +13,9 @@
   ],
   "scripts": {
     "sonar": "sonar-scanner.bat -Dsonar.projectKey=nodulusteam_logelas -Dsonar.organization=nodulusteam-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=d907dfcf01af9b168545db0d763a3ba697386a5b",
-    "prepare": "npm test",
     "build": "trash build && tsc",
-    "test": "nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
-    "test:coverage": "npm run build &&  set test='true'&alsatian build/tests/*.spec.js"
+    "test": "npm run build && nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
+    "test:coverage": "set test='true'&alsatian build/tests/*.spec.js"
   },
   "repository": {
     "type": "git",
