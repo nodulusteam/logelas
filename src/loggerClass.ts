@@ -56,20 +56,6 @@ export class Logger extends EventEmitter implements ILogger {
 
 
     public error(...args: any[]) {
-        args.forEach((arg) => {
-            if (typeof arg === 'object') {
-                ["message", "stack"].forEach(
-                    function iterator(key) {
-                        if (arg[key]) {
-                            arg.error = arg.error || {};
-                            arg.error[key] = arg[key];
-                        }
-                    }
-                );
-            }
-        });
-
-
         console.error(JSON.stringify(args));
         this.produce('error', ...args);
     }
