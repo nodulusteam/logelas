@@ -2,6 +2,16 @@ import { ILogger } from './log-interface';
 import { LogLevel } from './options/logLevel';
 import { EventEmitter } from 'events';
 
+const logToConsole = {
+    'warning': 'warn',
+    'error': 'error',
+    'silly': 'log',
+    'info': 'info',
+    'trace': 'log',
+    'log': 'log',
+}
+
+
 export class Logger extends EventEmitter implements ILogger {
     private debuglog: any;
     level: any;
@@ -15,19 +25,19 @@ export class Logger extends EventEmitter implements ILogger {
         if (process.env.NODE_LOG_CONSOLE === 'true') {
             this.on(fileName, (data: any) => {
                 const line = Object.keys(data).map((key) => {
-                    if (key !== 'level') {
+                    if (key !== 'level' && key !== 'name') {
                         return data[key];
                     } else {
                         return '';
                     }
-
-                }).reverse().join(',');
-
-                if (console[data.level]) {
-                    console[data.level](line);
-                } else {
+                }).reverse().join(' ');
+                try {
+                    console[logToConsole[data.level]](line);
+                } catch (e) {
+                    console.error(e);
                     console.log(line);
                 }
+
             });
         }
         this.level = logLevel;
