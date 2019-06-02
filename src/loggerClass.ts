@@ -14,7 +14,20 @@ export class Logger extends EventEmitter implements ILogger {
         this._applicationName = applicationName || 'application';
         if (process.env.NODE_LOG_CONSOLE === 'true') {
             this.on(fileName, (data: any) => {
-                console.log(data);
+                const line = Object.keys(data).map((key) => {
+                    if (key !== 'level') {
+                        return data[key];
+                    } else {
+                        return '';
+                    }
+
+                }).reverse().join(',');
+
+                if (console[data.level]) {
+                    console[data.level](line);
+                } else {
+                    console.log(line);
+                }
             });
         }
         this.level = logLevel;
