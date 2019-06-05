@@ -30,7 +30,7 @@ export class Logger extends EventEmitter implements ILogger {
                     } else {
                         return '';
                     }
-                }).reverse().join(' ');
+                }).join(' ');
                 try {
                     console[logToConsole[data.level]](line);
                 } catch (e) {
@@ -41,6 +41,7 @@ export class Logger extends EventEmitter implements ILogger {
             });
         }
         this.level = logLevel;
+        global.logelas.push();
     }
 
     public close() {

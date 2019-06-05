@@ -1,6 +1,6 @@
 import { AsyncTest, Expect, Test, TestCase, TestFixture, Timeout } from 'alsatian';
 process.env.NODE_LOG_CONSOLE = 'true';
-import { Logger } from '../'
+import { Logger, closeLogs } from '../'
 import { Controller } from './class'
 import { logger } from './test-logger'
 import { LogLevel } from '../options/logLevel';
@@ -26,7 +26,7 @@ export class Logs {
 
         log.debug('function message', () => { });
 
-        log.silly('silly message',TestFixture);
+        log.silly('silly message', TestFixture);
 
         await new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -86,6 +86,11 @@ export class Logs {
     public async testAutoLogger() {
         AutoLogger.info('testing AutoLogger');
         Expect(AutoLogger).toBe(AutoLogger);
+    }
+
+    @Test()
+    public closeLoggers() {
+        closeLogs();
     }
 
 }
