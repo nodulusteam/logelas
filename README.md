@@ -8,6 +8,7 @@
  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=alert_status)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=bugs)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nodulusteam_logelas&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=nodulusteam_logelas)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnodulusteam%2Flogelas.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnodulusteam%2Flogelas?ref=badge_shield)
 
 
 ### motivation
@@ -98,3 +99,6 @@ logger.warn(this, 'this is the last warning');
 truncate()
 
 use `logger.truncate()` to clear the log file (useful for testing and development stages)
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnodulusteam%2Flogelas.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnodulusteam%2Flogelas?ref=badge_large)
