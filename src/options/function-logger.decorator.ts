@@ -19,7 +19,7 @@ export const getMonkeyPatchMethod = function (target: any, method: Function, met
   methodIdentifier++
   const _methodIdentifier = methodIdentifier;
   return function (...args: any) {
-    preLog(target, methodName, args, options.logLevel || LogLevel.Trace, _methodIdentifier);
+    preLog(method, target, methodName, args, options.logLevel || LogLevel.Trace, _methodIdentifier);
     const result = method.apply(this, args);
     postLog(target, methodName, result, options.logLevel || LogLevel.Trace, _methodIdentifier);
     return result;

@@ -20,14 +20,10 @@ export function postLogError(logger: any, target: any, error: any, propertyKey: 
 }
 
 
-export function preLog(target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
+export function preLog(method: any, target: any, propertyKey: string, args: any, logLevel: LogLevel, _methodIdentifier?: number, filename?: string) {
     let logger: any;
     let name = extractName(target);
 
-    let method = target[propertyKey];
-    if (!method) {
-        method = target.prototype[propertyKey];
-    }
 
     if (!logger && target.logelas)
         logger = target.logelas;
@@ -75,7 +71,9 @@ function parseArgs(argValues: any[], func: Function) {
         return;
     }
     const fnStr = func.toString().replace(STRIP_COMMENTS, '');
-    let argNames: string[] | any = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+    const slice = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')'));
+
+    let argNames: string[] | any = slice.split(',');//(ARGUMENT_NAMES);
     if (argNames === null)
         return [];
 
@@ -83,15 +81,15 @@ function parseArgs(argValues: any[], func: Function) {
     return requiredArgNames.map(function (argName: string): number {
         return argNames.indexOf(argName);
     }).map(function (argNameIndex: number): any {
-        if (argNameIndex === -1 || argNameIndex >= argValues.length) return;
-        if (typeof argValues[argNameIndex] === 'function') {
-            return `${argNames[argNameIndex]} = ${argValues[argNameIndex].name}`;
-
-        } else {
-
-            return `${argNames[argNameIndex]} = ${stringify(argValues[argNameIndex])}`;
-
+        if (argNameIndex === -1) return; // || argNameIndex >= argValues.length
+        if (argNames[argNameIndex].indexOf('=') > -1) {
+            return `${argNames[argNameIndex].trim()}`;
         }
-    }).join(' | | ');
+        else if (typeof argValues[argNameIndex] === 'function') {
+            return `${argNames[argNameIndex]} = ${argValues[argNameIndex].name}`;
+        } else {
+            return `${argNames[argNameIndex]} = ${stringify(argValues[argNameIndex])}`;
+        }
+    }).join(', ');
 }
 

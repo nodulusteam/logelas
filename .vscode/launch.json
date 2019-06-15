@@ -34,6 +34,7 @@
                 "NODE_ENV": "debug",
                 "NODE_LOG_LEVEL": "trace",
                 "NODE_LOG_SYMBOL": "",
+                "NODE_LOG_CONSOLE": "true",
                 "NODE_LOG_IDENTIFIER": "the app ident"
             }
         },
