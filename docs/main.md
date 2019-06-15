@@ -11,17 +11,20 @@ When we build large projects using modules and components, it is best to impleme
 
 Here is a small example of a class decorated with LogClass decorator.
 
- ```typescript
+ ```javascript
 import { Logger, LogClass } from 'logelas'; // import logelas
 const log = new Logger('test.log', 'test'); // create a new virtual logger
 
 @LogClass(log) // provide the logger to the decorator
 export class Controller {   
-    public action1() {
-        log.error(this, 'there is the rror log');
+    public action1() {        
+        log.error('An error has occured');
+    }
+
+     public sum(a,b) {        
+       return a+b;
     }
 }
-
  ```
 
 

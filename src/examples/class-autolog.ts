@@ -7,28 +7,28 @@ const log = AutoLogger;
 export class Controller {
 
 
-    public action1() {
-        log.trace(this, 'a message from inside the method');
-        return this.action2() * 2;
+    public action1(factor: number, optional: any=4) {
+        log.trace('a message from inside the method');
+        return this.action2(factor) * factor * optional;
     }
 
 
-    public action2() {
-        log.info(this, 'a message from inside the method');
-        return this.action3() * 2;
+    public action2(factor: number) {
+        log.info('a message from inside the method');
+        return this.action3(factor, 3) * 2;
     }
 
 
-    public action3() {
-        log.warn(this, 'a message from inside the method');
-        return this.action4() * 2;
+    public action3(factor1: number, factor2: number) {
+        log.warn('a message from inside the method');
+        return this.action4('a message from inside the method') * factor1 * factor2;
     }
 
 
-    public action4() {
-        log.debug(this, 'a message from inside the method');     
+    public action4(message: string, optional: any=10) {
+        log.debug(message);
         return 4;
     }
 }
 let instance = new Controller();
-instance.action1();
+instance.action1(2);
