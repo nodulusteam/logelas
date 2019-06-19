@@ -1,6 +1,6 @@
 {
   "name": "logelas",
-  "version": "4.0.22",
+  "version": "4.0.23",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -33,11 +33,11 @@
     "trash-cli": "^1.4.0",
     "typescript": "^3.4.0",
     "typedoc": "^0.13.0",
-    "typedoc-plugin-markdown": "^1.2.0"
+    "typedoc-plugin-markdown": "^1.2.0",
+    "docsify": "^4.9.4"
   },
   "dependencies": {
     "debug": "^3.0.1",
-    "docsify": "^4.9.4",
     "lodash": "^4.17.11",
     "reflect-metadata": "^0.1.12",
     "stack-trace": "^0.0.10"
