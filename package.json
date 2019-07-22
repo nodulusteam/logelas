@@ -17,7 +17,8 @@
     "docsify": "docsify serve docs",
     "doc": "npm run doc:html",
     "doc:html": "typedoc",
-    "test": "npm run build && nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
+    "test":"npm run build && nyc alsatian build/**/*.spec.js",
+    "testx": "npm run build && nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
     "test:coverage": "set test='true'&alsatian build/tests/*.spec.js"
   },
   "repository": {
@@ -29,17 +30,16 @@
   "devDependencies": {
     "@types/node": "^10.0.0",
     "alsatian": "^2.0.0",
+    "docsify": "^4.9.4",
     "nyc": "^13.1.0",
     "trash-cli": "^1.4.0",
-    "typescript": "^3.4.0",
     "typedoc": "^0.13.0",
     "typedoc-plugin-markdown": "^1.2.0",
-    "docsify": "^4.9.4"
+    "typescript": "^3.4.0"
   },
   "dependencies": {
+    "cls-rtracer": "^1.2.0",
     "debug": "^3.0.1",
-    "lodash": "^4.17.11",
-    "reflect-metadata": "^0.1.12",
-    "stack-trace": "^0.0.10"
+    "reflect-metadata": "^0.1.12"
   }
 }

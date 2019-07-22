@@ -47,7 +47,7 @@ export class Logs {
         let result = await object.action2(90, 80);
 
         let stringResultOfLog = JSON.stringify(logger.logArray);
-        let expected = `["10000003 :: Controller.action2 =>  min = 90, max = 80 ","[object Object] a log message from inside the method","10000002 :: Controller.action1 =>  min = 90, max = 80 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`;
+        let expected = `["10000003 :: Controller.action2 =>  min = 90,  max = 80 ","[object Object] a log message from inside the method","10000002 :: Controller.action1 =>  min = 90,  max = 80 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`;
         Expect(stringResultOfLog).toBe(expected);
         return result;
     }
@@ -75,7 +75,7 @@ export class Logs {
         let object = new Controller();
         let result = object.action2(90, 80);
         let stringResultOfLog = JSON.stringify(logger.logArray);
-        let expected = `["10000003 :: Controller.action2 =>  min = 90, max = 80 ","[object Object] a log message from inside the method","10000002 :: Controller.action1 =>  min = 90, max = 80 ","10000002 :: Controller.action1 <=  7200 "]`
+        let expected = `["10000003 :: Controller.action2 =>  min = 90,  max = 80 ","[object Object] a log message from inside the method","10000002 :: Controller.action1 =>  min = 90,  max = 80 ","10000002 :: Controller.action1 <=  7200 "]`
         Expect(stringResultOfLog).toBe(expected);
         return result;
     }
