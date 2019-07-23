@@ -42,7 +42,7 @@ export class Logger extends EventEmitter implements ILogger {
             });
         }
         this.level = logLevel;
-       
+
     }
 
     public close() {
@@ -86,7 +86,9 @@ export class Logger extends EventEmitter implements ILogger {
 
 
     public error(...args: any[]) {
-        console.error(JSON.stringify(args));
+        if (!process.env.NO_CONSOLE) {
+            console.error(JSON.stringify(args));
+        }
         this.produce('error', ...args);
     }
 
