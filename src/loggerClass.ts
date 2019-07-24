@@ -36,7 +36,6 @@ export class Logger extends EventEmitter implements ILogger {
                     console[logToConsole[data.level]](line);
                 } catch (e) {
                     console.error(e);
-                    console.log(line);
                 }
 
             });
@@ -87,7 +86,7 @@ export class Logger extends EventEmitter implements ILogger {
 
     public error(...args: any[]) {
         if (!process.env.NO_CONSOLE) {
-            console.error(JSON.stringify(args));
+            console.error(args);
         }
         this.produce('error', ...args);
     }
