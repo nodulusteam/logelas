@@ -1,7 +1,6 @@
 import { ILogger } from './log-interface';
 import { LogLevel } from './options/logLevel';
 import { EventEmitter } from 'events';
-const rTracer = require('cls-rtracer');
 
 const logToConsole = {
     'warning': 'warn',
@@ -53,9 +52,7 @@ export class Logger extends EventEmitter implements ILogger {
 
         this.debuglog(...logargs);
         const logMessage = { level, system_id: null, name: this._applicationName, ...logargs };
-        if (process.env.LOG_CORRELATION) {
-            logMessage.system_id = rTracer.id();
-        }
+
         this.emit(this.fileName, logMessage);
 
     }
