@@ -38,8 +38,6 @@
     "typescript": "^3.4.0"
   },
   "dependencies": {
-    "cls-hooked": "^4.2.2",
-    "cls-rtracer": "^1.2.0",
     "debug": "^3.0.1",
     "reflect-metadata": "^0.1.12"
   }

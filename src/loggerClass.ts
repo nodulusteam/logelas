@@ -1,7 +1,6 @@
 import { ILogger } from './log-interface';
 import { LogLevel } from './options/logLevel';
 import { EventEmitter } from 'events';
-const rTracer = require('cls-rtracer');
 
 const logToConsole = {
     'warning': 'warn',
