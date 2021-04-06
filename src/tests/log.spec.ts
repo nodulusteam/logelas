@@ -36,7 +36,6 @@ describe("Create logs", () => {
     let stringResultOfLog = JSON.stringify(logger.logArray);
     let expected = `["10000003 :: Controller.action2 =>  min = 90,  max = 80 ","[object Object] a log message from inside the method","10000002 :: Controller.action1 =>  min = 90,  max = 80 ","10000002 :: Controller.action1 <=  7200 ","10000003 :: Controller.action2 <=  7200 "]`;
     expect(stringResultOfLog).toBe(expected);
-    return result;
   });
 
   it("decorators", async () => {
@@ -58,6 +57,7 @@ describe("Create logs", () => {
     expect(stringResultOfLog).toBe(expected);
   });
 
+  
   it("test autologger", async () => {
     AutoLogger.info('testing AutoLogger');
     expect(AutoLogger).toBe(AutoLogger);

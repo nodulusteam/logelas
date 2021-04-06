@@ -12,14 +12,14 @@
     "logging"
   ],
   "scripts": {
+    "ci:build":"yarn build && yarn test",
     "sonar": "sonar-scanner.bat -Dsonar.projectKey=nodulusteam_logelas -Dsonar.organization=nodulusteam-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=d907dfcf01af9b168545db0d763a3ba697386a5b",
     "build": "trash build && tsc",
     "docsify": "docsify serve docs",
-    "doc": "npm run doc:html",
+    "doc": "yarn doc:html",
     "doc:html": "typedoc",
-    "test": "jest",
-    "testx": "npm run build && nyc --reporter=lcov --reporter=html npm run test:coverage && nyc report",
-    "test:coverage": "set test='true'&alsatian build/tests/*.spec.js"
+    "test": "jest"
+  
   },
   "repository": {
     "type": "git",
