@@ -12,7 +12,7 @@
     "logging"
   ],
   "scripts": {
-    "ci:build": "yarn build && yarn test",
+    "ci:build": "yarn && yarn build && yarn test",
     "sonar": "sonar-scanner.bat -Dsonar.projectKey=nodulusteam_logelas -Dsonar.organization=nodulusteam-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=d907dfcf01af9b168545db0d763a3ba697386a5b",
     "build": "rm -rf dist && tsc",
     "docsify": "docsify serve docs",
